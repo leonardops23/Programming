@@ -2,9 +2,11 @@
 Realizar un triangulo equilatero
 """
 
-def triangle() -> str:
-    for i in range(1, 10):
-        print(f"{" " + i * "*"}")
+height = int(input("Enter the height of the triangle: "))
+
+def triangle(height) -> str:
+    for i in range(1, height + 1):
+        print(' ' * (height - i) + '*' * (2 * i - 1))
         
 
-triangle()
+triangle(height)
