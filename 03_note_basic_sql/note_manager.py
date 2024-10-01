@@ -16,3 +16,22 @@ def view_note():
     notes = c.fetchall()
     conn.close()
     return notes
+
+
+def update_note(id, title, content):
+    conn = connect()
+    c = conn.cursor()
+    c.execute('UPDATE notes SET title = ?, content = ? WHERE id = ?', (title, content, id))
+    conn.commit()
+    conn.close()
+    print("Modified Note")
+  
+
+def delete_note(id):
+    conn = connect()
+    c = conn.cursor()
+    c.execute(
+        'DELETE FROM notes WHERE id = ?', (id)
+    )
+    conn.commit()
+    conn.close()
