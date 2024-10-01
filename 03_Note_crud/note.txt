@@ -1,9 +1,0 @@
-
-. Trabajamos con la terminal
-. Tenemos que hacer un bucle
-. Hacer un menu con algunas de la option
-. input para el text
-. if el usuario escribe un numero de algunas optiones
-    parasa a la function correspondiente
-. 
-
