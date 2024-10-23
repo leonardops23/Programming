@@ -42,6 +42,12 @@ def register():
             users = {}
 
         if len(username) > max_char:
+
+            if len(password) < max_char_pass:
+                messagebox.showwarning("Length Password",
+                                              f"Password should be max {max_char_pass} character.")
+                return
+
             if username in users:
                 messagebox.showwarning("Error", "User already exists")
             else:
@@ -51,7 +57,7 @@ def register():
                     json.dump(users, file)
                 messagebox.showinfo("Register", "!successful Register")
         else:
-            messagebox.showwarning("User", f"User should be max {max_char -1}")
+            messagebox.showwarning("User", f"User should be max {max_char} character.")
     else:
             messagebox.showwarning("Error", "Please complete all fields.")
 
