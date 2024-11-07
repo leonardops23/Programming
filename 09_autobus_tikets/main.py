@@ -1,4 +1,7 @@
 def main_menu():
+    info = "Select one of the options: "
+    print(info)
+
     choose_menu = [
         "Login",
         "Sign up",
@@ -12,14 +15,14 @@ def main_menu():
 
     while True:
         try:
-            
+
             pass
         except:
             pass
     pass
 
 def main():
-    welcome = "Buy your tickets"
+    print("Buy your tickets")
     main_menu()
 
 if __name__ == "__main__":
