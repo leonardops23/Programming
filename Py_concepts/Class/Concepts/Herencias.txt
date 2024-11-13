@@ -1,0 +1,5 @@
+Herencia simple = Persona -> Empleado
+Herencia gerargica = Persona > empleado > jefe > estudiante
+
+
+'Droid Sans Mono', 'monospace', monospace
