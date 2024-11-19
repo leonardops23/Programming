@@ -7,9 +7,33 @@ class Expense:
     def __repr__(self):
         return f"Expense: {self.name} - {self.category} - {self.ammount}"
 
+def get_name_expense() -> str:
+    while True:
+        name_expense = input("Enter name of the expense: ")
+        try:
+            if name_expense == '' or len(name_expense) < 0:
+                print("Try again, there is empty space")
+            else:
+                return name_expense
+        except Exception:
+            print("Try again")
+
+
+def get_ammount_expense() -> float:
+    while True:
+        try:
+            ammount_expense = float(input("Enter ammount of the expense: "))
+            if ammount_expense < 0 or ammount_expense == '':
+                print("Don't save with value 0 or somenthing else")
+            else:
+                return ammount_expense
+        except ValueError:
+            print("Error, Value empty, Try again")
+
+
 def get_user_expense():
     # get name, category and ammount
-    name_expense = input("Enter name of the expense: ")
+    name_expense = get_name_expense()
     category_expense = [
         "🏠 Home",
         "🎥 Entertainent",
@@ -18,7 +42,7 @@ def get_user_expense():
         "🚌 Trasnportation",
         "🍔 Food"
     ]
-    ammount_expense = float(input("Enter ammount of the expense: "))
+    ammount_expense = get_ammount_expense()
 
     while True:
         print("\nCategory: 🔽")
@@ -39,10 +63,15 @@ def get_user_expense():
         else:
             print("Please, Try again")
 
-def main():
 
+def save_to_file(datas_user):
+    print(datas_user)
+    
+
+def main():
     user_expense = get_user_expense()
-    print(user_expense)
+    # file save to json format
+    save_to_file(user_expense)
 
 if __name__ == "__main__":
     main()
