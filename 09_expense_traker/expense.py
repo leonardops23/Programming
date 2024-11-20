@@ -161,7 +161,7 @@ def save_to_file(datas_user: Expense) -> bool:
         with open(save_data, "r") as file:
             try:
                 data_list = json.load(file)
-            except:
+            except Exception:
                 data_list = []
     else:
         data_list = []
