@@ -1,15 +1,31 @@
 import json
+import csv
 
-if __name__ == '__main__':
-    try:
-        with open('data.json', 'r') as f:
-            data = json.loads(f.read())
+"""
+    This script reads a JSON file and writes its content to a CSV file.
+    The JSON file contains a list of dictionaries, each dictionary represents a person.
+    The CSV file will have the following columns: name, age, email, street, city, state, zip.
+"""
 
-        output = ','.join([*data[0]])
-        for obj in data:
-            output += f'\n{obj["Name"]},{obj["age"]},{obj["birthyear"]}'
+if __name__ == "__main__":
+    with open("data.json", "r") as f:
+        data = json.load(f)
 
-        with open('output.csv', 'w') as f:
-            f.write(output)
-    except Exception as ex:
-        print(f'Error: {str(ex)}')
+    with open("data.csv", "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["name", "age", "email", "street", "city", "state", "zip"])
+        for item in data:
+            writer.writerow(
+                [
+                    item["name"],
+                    item["age"],
+                    item["email"],
+                    item["address"]["street"],
+                    item["address"]["city"],
+                    item["address"]["state"],
+                    item["address"]["zip"],
+                ]
+            )
+
+    with open("data.csv", "r") as f:
+        print(f.read())
