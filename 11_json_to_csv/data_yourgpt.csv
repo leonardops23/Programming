@@ -1,0 +1,4 @@
+name,age,email,address/street,address/city,address/state,address/zip
+John Doe,30,john.doe@example.com,123 Main St,Anytown,CA,12345
+Jane Smith,25,jane.smith@example.com,456 Oak St,Othertown,TX,67890
+Alice Johnson,28,alice.johnson@example.com,789 Pine St,Sometown,FL,11223
