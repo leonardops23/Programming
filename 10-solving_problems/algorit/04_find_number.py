@@ -3,6 +3,7 @@ Given an array containing n distinct numbers in
 the range [0, n] return missing number.
 """
 
+
 def missing_number(arr: list[int]) -> int:
     arr.sort()
     if not arr:
@@ -18,6 +19,7 @@ def missing_number(arr: list[int]) -> int:
         if arr[i] - arr[i - 1] > 1:
             return arr[i] -1
     return None
+
 
 if __name__ == "__main__":
     print(missing_number([3, 2, 1, 5]))
