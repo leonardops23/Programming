@@ -5,9 +5,12 @@ def main(page: ft.Page):
     # Configuración de la página
     page.title = "Traductor App"
     page.padding = 20
+    page.theme_mode = ft.ThemeMode.SYSTEM
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.MainAxisAlignment.CENTER
 
-    # Mostrar la página principal
-    home_page = HomePage(page)
+    home_page = HomePage(page=page)
+
     page.add(home_page.build())
 
 # Ejecutar la aplicación
