@@ -5,18 +5,53 @@ class HomePage:
     def __init__(self, page: ft.Page):
         self.page = page
         self.translator = Translator()
-        self.source_lang = ft.Dropdown(options=[ft.dropdown.Option("es"), ft.dropdown.Option("en")], value="es")
-        self.target_lang = ft.Dropdown(options=[ft.dropdown.Option("es"), ft.dropdown.Option("en")], value="en")
-        self.input_text = ft.TextField(label="Texto a traducir", multiline=True)
-        self.output_text = ft.TextField(label="Traducción", multiline=True, read_only=True)
-        self.translate_button = ft.ElevatedButton(text="Traducir", on_click=self.translate_text)
-
-    def translate_text(self, e):
+        self.input_text = ft.TextField(
+            label="Texto a Traducir",
+            min_lines=3,
+            max_lines=5,
+            expand=True,
+            multiline=True
+        )
+        self.output_text = ft.TextField(
+            label="Translation",
+            multiline=True,
+            min_lines=3,
+            max_lines=5,
+            expand=True,
+            read_only=True
+        )
+        self.language_from = ft.Dropdown(
+            label="Source Language",
+            options=[
+                ft.dropdown.Option("es"),
+                ft.dropdown.Option("en"),
+                ft.dropdown.Option("fr"),
+                ft.dropdown.Option("it"),
+                ft.dropdown.Option("de"),
+            ],
+            value="es",
+            width=150,
+        )
+        self.language_to = ft.Dropdown(
+            label="Target Language",
+            options=[
+                ft.dropdown.Option("es"),
+                ft.dropdown.Option("en"),
+                ft.dropdown.Option("fr"),
+                ft.dropdown.Option("it"),
+                ft.dropdown.Option("de"),
+            ],
+            value="en",
+            width=150,
+        )
+        self.translate_button = ft.ElevatedButton(text="Translate", on_click=self.click_translate)
+    
+    def click_translate(self, e):
         text = self.input_text.value
-        source_lang = self.source_lang.value
-        target_lang = self.target_lang.value
-        translation = self.translator.translate(text, source_lang, target_lang)
-        self.output_text.value = translation
+        source = self.language_from.value
+        target = self.language_to.value
+        translated = self.translator.translate(text, source, target)  # Call on self.translator
+        self.output_text.value = translated
         self.page.update()
 
     def build(self):
@@ -24,7 +59,12 @@ class HomePage:
             controls=[
                 ft.Text(value="Traductor App", size=24),
                 self.input_text,
-                ft.Row(controls=[self.source_lang, self.target_lang]),
+                ft.Row(
+                    controls=[
+                        self.language_from,
+                        self.language_to,
+                    ]
+                ),
                 self.translate_button,
                 self.output_text,
             ]
