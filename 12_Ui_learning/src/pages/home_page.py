@@ -1,6 +1,7 @@
 import flet as ft
 from src.services.translator import Translator
 
+
 class HomePage:
     def __init__(self, page: ft.Page):
         self.page = page
@@ -45,25 +46,36 @@ class HomePage:
             width=150,
         )
         self.translate_button = ft.ElevatedButton(text="Translate", on_click=self.click_translate)
-    
+        self.icon_micro = ft.Icon(name=ft.Icons.MULTITRACK_AUDIO)
+        self.icon_camara = ft.Icon(name=ft.Icons.CAMERA_ALT)
+
     def click_translate(self, e):
         text = self.input_text.value
         source = self.language_from.value
         target = self.language_to.value
-        translated = self.translator.translate(text, source, target)  # Call on self.translator
+        translated = self.translator.translate(text, source, target)
         self.output_text.value = translated
         self.page.update()
 
     def build(self):
         return ft.Column(
             controls=[
-                ft.Text(value="Traductor App", size=24),
-                self.input_text,
+                ft.Text(value="Traductor", size=24),
                 ft.Row(
                     controls=[
                         self.language_from,
+                        ft.Icon(name=ft.icons.ARROW_FORWARD, color=ft.colors.BLUE),  # Flecha entre los selectores
                         self.language_to,
-                    ]
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                ),
+                self.input_text,
+                ft.Row(
+                    controls=[
+                        self.icon_micro,
+                        self.icon_camara,
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
                 ),
                 self.translate_button,
                 self.output_text,
