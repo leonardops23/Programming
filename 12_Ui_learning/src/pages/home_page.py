@@ -48,6 +48,7 @@ class HomePage:
         self.translate_button = ft.ElevatedButton(text="Translate", on_click=self.click_translate)
         self.icon_micro = ft.Icon(name=ft.Icons.MULTITRACK_AUDIO)
         self.icon_camara = ft.Icon(name=ft.Icons.CAMERA_ALT)
+        self.icon_menu = ft.Icon(name=ft.Icons.HISTORY)
 
     def click_translate(self, e):
         text = self.input_text.value
@@ -57,14 +58,19 @@ class HomePage:
         self.output_text.value = translated
         self.page.update()
 
+    def history(self, e):
+        self.page.show_snack_bar(ft.SnackBar(content=ft.Text(f"Selected: {e.control.text}"),
+                                             open=True))
+
     def build(self):
         return ft.Column(
             controls=[
                 ft.Text(value="Traductor", size=24),
+                self.icon_menu,
                 ft.Row(
                     controls=[
                         self.language_from,
-                        ft.Icon(name=ft.icons.ARROW_FORWARD, color=ft.colors.BLUE),  # Flecha entre los selectores
+                        ft.Icon(name=ft.icons.ARROW_FORWARD, color=ft.colors.BLUE),
                         self.language_to,
                     ],
                     alignment=ft.MainAxisAlignment.CENTER,

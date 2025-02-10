@@ -1,5 +1,6 @@
 from googletrans import Translator as GoogleTranslator
 
+
 class Translator:
     def __init__(self):
         # Initialize the Google Translate client
