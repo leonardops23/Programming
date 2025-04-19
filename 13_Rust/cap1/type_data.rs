@@ -48,12 +48,7 @@ fn tuplas_main() {
 }
 
 fn arr_main() {
-	// arreglos
 	let arreglo: [i32; 5] = [1, 2, 3, 4, 5];
 	println!("Arreglo: {:?}", arreglo);
 	println!("Primer elemento del arrglo {}", arreglo[0]);
 }
-
-
-
-
