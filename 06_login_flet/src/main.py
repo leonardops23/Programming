@@ -1,13 +1,29 @@
-
+import os
 import flet as ft
+import json
 
 FILE_USERS = "users.json"
 
-def load_users():
-    pass
 
-def save_users():
-    users = []
+def load_users():
+    """
+    Carga los usuarios desde un archivo
+    """
+    if not os.path.exists(FILE_USERS):
+        return {}
+    
+    with open(FILE_USERS, "r") as file:
+        try:
+            return json.load(file)
+        except json.JSONDecodeError:
+            return {}
+
+
+def save_users(users):
+    """Guarda los usuarios en un archivo"""
+    with open(FILE_USERS, "w") as file:
+        json.dump(users, file, indent=4) # indent=4 para que el archivo tenga un formato mas legible
+
 
 def main(page: ft.Page):
     page.title = "Sistema de Login y registro"
@@ -51,6 +67,12 @@ def main(page: ft.Page):
         autofocus=True,
         password=True,
         can_reveal_password=True,
+    )
+
+    # home view
+    home_view = ft.Column(
+        spacing=20,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     )
 
     # campos de registro
@@ -123,7 +145,7 @@ def main(page: ft.Page):
 
     def show_register():
         """Muestra la vista de registro"""
-        page.clean()
+        page.clean() # limpia la pantalla
         message.value = ""
         success_message.value = ""
         register_view.controls = [
@@ -137,6 +159,7 @@ def main(page: ft.Page):
             ft.ElevatedButton(
                 text="Registrarse",
                 width=200,
+                on_click=handle_register,
             ),
             ft.TextButton(
                 text="¿Tienes una cuenta? Inicia sesión",
@@ -148,14 +171,73 @@ def main(page: ft.Page):
         page.update()
 
 
-    def handle_login():
+    def show_home():
+        """
+        Muestra la vista del usuario despues de hacer sesion
+        """
+        page.clean()
+        home_view.controls = [
+            ft.Text("Inicio", size=24, weight=ft.FontWeight.BOLD),
+            ft.Text(f"Bienvenido {current_user}", size=20),
+            ft.TextButton(
+                text="Cerrar Sesion",
+                on_click=lambda _: show_login(),
+            )
+        ]
+
+        page.add(home_view)
+        page.update()
+
+
+    def handle_login(e):
         """Maneja el inicio de sesion"""
         nonlocal current_user # indica que se va a usar la variable global
 
         email = email_login.value
+        password = password_login.value
 
-        print(email)        
+        if not email or not password:
+            message.value = "Por favor, completa todos los campos"
+            page.update()
+            return
+
+        if email not in users or users[email]["password"] != password:
+            message.value = "Correo Electronico o Contraseña incorrectos"
+            page.update()
+            return
+
+        current_user = email
+        clear_fields()
+        show_home()
 
     show_login()
+
+
+    def handle_register(e):
+        """Maneja el registro"""
+        nonlocal current_user # indica que se va a usar la variable global
+
+        name = name_register.value
+        email = email_register.value
+        password = password_register.value
+        confirm_password = confirm_password_register.value
+
+        if not name or not email or not password or not confirm_password:
+            message.value = "Por favor, completa todos los campos"
+            page.update()
+            return
+
+        if password != confirm_password:
+            message.value = "Las contraseñas no coinciden"
+            page.update()
+            return
+
+        users[email] = {
+            "name": name,
+            "password": password,
+        }
+        save_users(users)
+        clear_fields()
+        show_login()
 
 ft.app(main)
