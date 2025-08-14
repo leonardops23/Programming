@@ -1,6 +1,0 @@
-Django
-Pillow
-djangorestframework
-django-filter
-django-cors-headers
-
